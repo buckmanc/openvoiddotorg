@@ -1,0 +1,47 @@
+/* Reset some default spacing */
+body {
+    margin: 0;
+    font-family: sans-serif;
+
+    /* Center the page content */
+    display: flex;
+    justify-content: center;
+}
+
+/* Main container */
+main {
+    max-width: 900px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Make video fill the page width */
+video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Stack elements vertically under the video */
+.verticalStack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+/* Links row */
+.horizontalStack {
+    display: flex;
+    gap: 16px;
+}
+
+/* Make QR image look nice */
+.verticalStack img {
+    max-width: 200px;
+    height: auto;
+}
