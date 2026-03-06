@@ -18,16 +18,28 @@ fi
 qrencode --margin=1 --size=1 "ihttps://openroll.org" --output "$TEMP/orqr.png"
 magick "$TEMP/orqr.png" -interpolate integer -filter point -resize "${optBigWidth}x${optBigWidth}" "qr_qr.png"
 
+# determine border for the text as one "pixel" from the enlarged qr code
+# since it has a natural one "pixel" white border
 qrBaseWidth="$(identify -format '%w' "$TEMP/orqr.png")"
 borderWidth="$((optBigWidth / qrBaseWidth))"
-
+textWdith="$((optBigWidth - borderWidth - borderWidth))"
 
 # generate text
-magick -background white -gravity center -font PressStart2P.ttf -fill black -size "${optBigWidth}x${optBigWidth}" caption:'OPENROLL.ORG' +repage -trim -bordercolor white -border 10 qr_text.png
+# start too big
+# then trim and resize down
+# then add border
+# then trim border from the top side only
+magick -background white -gravity center -font PressStart2P.ttf -fill black \
+	-size "$((textWdith + 200))x$((optBigWidth + 200))" caption:'OPENROLL.ORG' \
+	-trim +repage \
+	-resize "${textWdith}x${optBigWidth}" \
+	-bordercolor white -border "$borderWidth" -define trim:edges=north -trim qr_text.png
 
 # join and shrink
-magick qr_qr.png qr_text.png -gravity center -append images/qr_big.png
+magick qr_qr.png qr_text.png -background white -gravity center -append images/qr_big.png
 magick images/qr_big.png -resize "${optSmallWidth}" images/qr.png
 
+# clean up
 rm "qr_qr.png"
 rm "qr_text.png"
+rm "$TEMP/orqr.png"
