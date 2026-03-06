@@ -18,8 +18,11 @@ then
 
 	unzip "$zipPath" -d .
 	ffmpegLocArgs=(--ffmpeg-location ".")
+	ffmpegCmd="./ffmpeg"
 
 	rm "$zipPath"
+else
+	ffmpegCmd="ffmpeg"
 fi
 
 if ! type yt-dlp > /dev/null 2>&1
@@ -40,7 +43,7 @@ yt-dlp \
 	"${ffmpegLocArgs[@]}"
 
 # crop out the black bars
-ffmpeg -i openroll_temp.webm -vf 'crop=ih/3*4:ih' openroll_intro.webm
+"$ffmpegCmd" -i openroll_temp.webm -vf 'crop=ih/3*4:ih' openroll_intro.webm
 mv openroll_temp.en.vtt openroll_intro.en.vtt
 
 # clean up
