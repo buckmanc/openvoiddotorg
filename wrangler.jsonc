@@ -1,0 +1,10 @@
+{
+  "name": "openrolldotorg",
+  "compatibility_date": "2026-03-05",
+  "assets": {
+    "directory": "."
+  },
+  "preview_urls": false,
+  "workers_dev": false,
+  "last_item_with_no_comma": true
+}
