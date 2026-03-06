@@ -4,4 +4,4 @@
 
 Join the movement.
 
-![Join the movement.](qr.png)
+![Join the movement.](images/qr.png)
