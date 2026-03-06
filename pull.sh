@@ -6,8 +6,16 @@ ffmpegLocArgs=()
 
 if ! type ffmpeg > /dev/null 2>&1
 then
-	curl -Ls 'https://ffbinaries.com/api/v1/version/latest' | jq -r '.bin."linux-64"'.ffmpeg | xargs -n 1 curl -O
+	curlArgs=(--referer 'https://ffbinaries.com' --location --anyauth --insecure --header "Upgrade-Insecure-Requests: 1" --user-agent "Mozilla/5.0 Gecko")
+	apiResponse="$(curl "${curlArgs[@]}" 'https://ffbinaries.com/api/v1/version/latest')"
+	# echo "apiResponse: $apiResponse"
+	binaryUrl="$(echo "$apiResponse" | jq -r '.bin."linux-64"'.ffmpeg)"
+	curl "${curlArgs[@]}" -O "$binaryUrl"
 	zipPath="$(find . -type f -iname 'ffmpeg*.zip' -print -quit)"
+
+	ls -sh "$zipPath"
+	file "$zipPath"
+
 	unzip "$zipPath" -d .
 	ffmpegLocArgs=(--ffmpeg-location ".")
 
