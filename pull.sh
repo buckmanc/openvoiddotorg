@@ -31,8 +31,9 @@ then
 fi
 
 url="https://youtu.be/dQw4w9WgXcQ"
+# gotta keep the max file size under 25 MB to stay on cloudflares free plan
 yt-dlp \
-	-S "res:720" \
+	-S "res:480" \
 	--no-embed-thumbnail \
 	-t sleep \
 	"$url" \
@@ -43,7 +44,7 @@ yt-dlp \
 	"${ffmpegLocArgs[@]}"
 
 # crop out the black bars
-"$ffmpegCmd" -i openroll_temp.webm -vf 'crop=ih/3*4:ih' openroll_intro.webm
+"$ffmpegCmd" -y -i openroll_temp.webm -vf 'crop=ih/3*4:ih' openroll_intro.webm
 mv openroll_temp.en.vtt openroll_intro.en.vtt
 
 # clean up
