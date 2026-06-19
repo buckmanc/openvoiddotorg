@@ -15,12 +15,12 @@ then
 fi
 
 # generate qr
-qrencode --margin=1 --size=1 "ihttps://openroll.org" --output "$TEMP/orqr.png"
-magick "$TEMP/orqr.png" -interpolate integer -filter point -resize "${optBigWidth}x${optBigWidth}" "qr_qr.png"
+qrencode --margin=1 --size=1 "https://openvoid.org" --output "$TEMP/ovqr.png"
+magick "$TEMP/ovqr.png" -interpolate integer -filter point -resize "${optBigWidth}x${optBigWidth}" "qr_qr.png"
 
 # determine border for the text as one "pixel" from the enlarged qr code
 # since it has a natural one "pixel" white border
-qrBaseWidth="$(identify -format '%w' "$TEMP/orqr.png")"
+qrBaseWidth="$(identify -format '%w' "$TEMP/ovqr.png")"
 borderWidth="$((optBigWidth / qrBaseWidth))"
 textWidth="$((optBigWidth - borderWidth - borderWidth))"
 
@@ -30,7 +30,7 @@ textWidth="$((optBigWidth - borderWidth - borderWidth))"
 # then add border
 # then trim border from the top side only
 magick -background white -gravity center -font PressStart2P.ttf -fill black \
-	-size "$((textWidth + 200))x$((optBigWidth + 200))" label:'OPENROLL.ORG' \
+	-size "$((textWidth + 200))x$((optBigWidth + 200))" label:'OPENVOID.ORG' \
 	-trim +repage \
 	-resize "${textWidth}x${optBigWidth}" \
 	-bordercolor white -border "$borderWidth" -define trim:edges=north -trim qr_text_bottom.png
@@ -53,17 +53,17 @@ magick images/qr_big.png -resize "${optSmallWidth}" images/qr.png
 
 
 magick -background white -gravity center -font PressStart2P.ttf -fill black \
-	-size "450x450" label:$'OPEN\nROLL\n.ORG' -trim \
+	-size "450x450" label:$'OPEN\nVOID\n.ORG' -trim \
 	square_text.png
 
 magick square_text.png -gravity center \
 	-background white -extent '500x500' \
-	images/open_roll_social_card.png
+	images/open_void_social_card.png
 
 magick square_text.png -gravity center \
 	-background white -resize '400x400' +repage \
 	-extent '640x480' \
-	openroll_intro_thumbnail.png
+	openvoid_intro_thumbnail.png
 
 magick square_text.png -gravity center \
 	-background white -resize '46x46' +repage \
@@ -74,5 +74,5 @@ magick square_text.png -gravity center \
 rm -f "qr_qr.png"
 rm -f "qr_text_bottom.png"
 rm -f "qr_text_top.png"
-rm -f "$TEMP/orqr.png"
+rm -f "$TEMP/ovqr.png"
 rm -f "square_text.png"

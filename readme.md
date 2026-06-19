@@ -1,6 +1,6 @@
-# OpenRoll.org
+# OpenVoid.org
 
-[OpenRoll.org](https://openroll.org)
+[OpenVoid.org](https://openvoid.org)
 
 Join the movement.
 

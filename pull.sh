@@ -37,16 +37,16 @@ yt-dlp \
 	--no-embed-thumbnail \
 	-t sleep \
 	"$url" \
-	-o "openroll_temp.webm" \
+	-o "openvoid_temp.webm" \
 	--write-subs \
 	--sub-format 'vtt' \
 	--sub-langs 'en' \
 	"${ffmpegLocArgs[@]}"
 
 # crop out the black bars
-"$ffmpegCmd" -y -i openroll_temp.webm -vf 'crop=ih/3*4:ih' openroll_intro.webm
-mv openroll_temp.en.vtt openroll_intro.en.vtt
+"$ffmpegCmd" -y -i openvoid_temp.webm -vf 'crop=ih/3*4:ih' openvoid_intro.webm
+mv openvoid_temp.en.vtt openvoid_intro.en.vtt
 
 # clean up
-rm openroll_temp.webm
+rm openvoid_temp.webm
 rm -f ./ffmpeg
